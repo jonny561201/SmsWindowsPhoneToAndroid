@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 
 namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
@@ -17,8 +18,11 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var message = new Message();
             var bodyXpath = "//Body";
             var sendXpath = "//Sender";
+            var timestampXpath = "//LocalTimestamp";
             message.Body = nodes.Item(0).SelectSingleNode(bodyXpath).InnerText;
             message.Sender = nodes.Item(0).SelectSingleNode(sendXpath).InnerText;
+            var timeStamp = long.Parse(nodes.Item(0).SelectSingleNode(timestampXpath).InnerText);
+            message.TimeStamp = DateTime.FromFileTime(timeStamp);
 
             return message;
         }

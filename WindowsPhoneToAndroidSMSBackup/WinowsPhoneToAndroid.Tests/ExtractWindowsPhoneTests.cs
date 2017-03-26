@@ -1,4 +1,5 @@
-﻿using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid;
+﻿using System;
+using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid;
 using NUnit.Framework;
 
 namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
@@ -31,6 +32,15 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             var expected = "5153138947";
 
             Assert.AreEqual(expected, actual.Sender);
+        }
+
+        [Test]
+        public void ExtractShouldParseOutLocalTimeStamp()
+        {
+            var expected = DateTime.FromFileTime(131348483095578379);
+            var actual = ExtractWindows.Extract(Message);
+
+            Assert.AreEqual(expected, actual.TimeStamp);
         }
     }
 }
