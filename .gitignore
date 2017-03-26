@@ -13,3 +13,6 @@ bld/
 # Visual Studio 2015 cache/options directory
 .vs/
 WindowsPhoneToAndroidSMSBackup/Properties/
+
+# The packages folder can be ignored because of Package Restore
+**/packages/*
