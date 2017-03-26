@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
+using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 
-namespace WindowsPhoneToAndroidSMSBackup
+namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 {
     public class ExtractWindowsPhone
     {
-        public string Extract(string message)
+        private readonly string MessageNodes = "//Message";
+
+        public Message Extract(string xmlString)
         {
-            throw new NotImplementedException();
+            var xdoc = new XmlDocument();
+
+            xdoc.LoadXml(xmlString);
+
+            var nodes = xdoc.SelectNodes(MessageNodes);
+            var message = new Message();
+            var bodyXpath = "//Body";
+            message.body = nodes.Item(0).SelectSingleNode(bodyXpath).InnerText;
+
+            return message;
         }
     }
 }

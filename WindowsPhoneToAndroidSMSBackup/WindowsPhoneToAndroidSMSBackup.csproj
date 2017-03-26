@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="WindowsPhoneToAndroid\ExtractWindowsPhone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsPhoneToAndroid\Models\Message.cs" />
     <Compile Include="WinowsPhoneToAndroid.Tests\ExtractWindowsPhoneTests.cs" />
   </ItemGroup>
   <ItemGroup>
