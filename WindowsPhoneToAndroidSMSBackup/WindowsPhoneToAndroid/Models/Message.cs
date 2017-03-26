@@ -8,5 +8,6 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models
         public string Sender { get; set; }
         public DateTime TimeStamp { get; set; }
         public bool IsRead { get; set; }
+        public bool IsIncoming { get; set; }
     }
 }
