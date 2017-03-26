@@ -16,7 +16,9 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var nodes = xdoc.SelectNodes(MessageNodes);
             var message = new Message();
             var bodyXpath = "//Body";
-            message.body = nodes.Item(0).SelectSingleNode(bodyXpath).InnerText;
+            var sendXpath = "//Sender";
+            message.Body = nodes.Item(0).SelectSingleNode(bodyXpath).InnerText;
+            message.Sender = nodes.Item(0).SelectSingleNode(sendXpath).InnerText;
 
             return message;
         }

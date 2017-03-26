@@ -21,9 +21,17 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             var actual = ExtractWindows.Extract(Message);
             var expected = "Ooh good to know!! Thanks";
 
-            Assert.AreEqual(expected, actual.body);
+            Assert.AreEqual(expected, actual.Body);
         }
 
+        [Test]
+        public void ExtractShouldParseOutMessageSender()
+        {
+            var actual = ExtractWindows.Extract(Message);
+            var expected = "5153138947";
+
+            Assert.AreEqual(expected, actual.Sender);
+        }
     }
 }
 
