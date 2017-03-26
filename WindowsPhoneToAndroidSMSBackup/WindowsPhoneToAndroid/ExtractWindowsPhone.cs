@@ -19,9 +19,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var bodyXpath = "//Body";
             var sendXpath = "//Sender";
             var timestampXpath = "//LocalTimestamp";
+            var isReadXpath = "//IsRead";
+
+            var timeStamp = long.Parse(nodes.Item(0).SelectSingleNode(timestampXpath).InnerText);
             message.Body = nodes.Item(0).SelectSingleNode(bodyXpath).InnerText;
             message.Sender = nodes.Item(0).SelectSingleNode(sendXpath).InnerText;
-            var timeStamp = long.Parse(nodes.Item(0).SelectSingleNode(timestampXpath).InnerText);
+            message.IsRead = bool.Parse(nodes.Item(0).SelectSingleNode(isReadXpath).InnerText);
             message.TimeStamp = DateTime.FromFileTime(timeStamp);
 
             return message;
