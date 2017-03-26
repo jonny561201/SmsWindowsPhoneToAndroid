@@ -9,5 +9,9 @@ namespace WindowsPhoneToAndroidSMSBackup
 {
     public class ExtractWindowsPhone
     {
+        public string Extract(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
