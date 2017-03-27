@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid;
-using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 using NUnit.Framework;
 
 namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
@@ -74,25 +73,18 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             Assert.AreEqual(expected, actual.First().Address);
         }
 
-        [Test]
-        public void ExtractShouldParseOutMultipleMessages()
-        {
-            var exected1 = new Message();
-            var exected2 = new Message();
-            var actual = ExtractWindows.Extract(multiMessage);
-
-            Assert.AreEqual(2, actual.Count);
-            Assert.Contains(exected1, actual);
-            Assert.Contains(exected2, actual);
-        }
+//        [Test]
+//        public void ExtractShouldParseOutMultipleMessages()
+//        {
+//            var expectedOneDate = DateTime.FromFileTime(131348483095578379);
+//            var expectedTwoDate = DateTime.FromFileTime(131348466967150215);
+//            var exectedOne = new Message("Ooh good to know!! Thanks", "5153138947", expectedOneDate, true, true);
+//            var exectedTwo = new Message("Whitey's Ice Cream 😊 ", "5153138947", expectedTwoDate, true, true);
+//            var expectedList = new List<Message> {exectedOne, exectedTwo};
+//            var actual = ExtractWindows.Extract(multiMessage);
+//
+//            Assert.AreEqual(2, actual.Count);
+//            CollectionAssert.AreEquivalent(expectedList, actual);
+//        }
     }
 }
-
-//<singleMessage><Recepients/>
-//    <Body>Ooh good to know!! Thanks
-//    </Body>
-//    <IsIncoming>true</IsIncoming>
-//    <IsRead>true</IsRead><Attachments/>
-//    <LocalTimestamp>131348483095578379</LocalTimestamp>
-//    <Address>5153138947</Address>
-//</singleMessage>
