@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid;
+using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 using NUnit.Framework;
 
 namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
@@ -9,7 +11,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
     public class ExtractWindowsPhoneTests
     {
         public string singleMessage = "<Message><Recepients/><Body>Ooh good to know!! Thanks</Body><IsIncoming>true</IsIncoming><IsRead>true</IsRead><Attachments/><LocalTimestamp>131348483095578379</LocalTimestamp><Address>5153138947</Address></Message>";
-        public string singleRecipientMessage = "<Message><Recepients><string>5153138947</string></Recepients><Body>Whitey's Ice Cream 😊 </Body><IsIncoming>false</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131348466967150215</LocalTimestamp><Address/></Message>";
+        public string singleRecipientMessage = "<Message><Recepients><string> </string></Recepients><Body>Whitey's Ice Cream 😊 </Body><IsIncoming>false</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131348466967150215</LocalTimestamp><Address/></Message>";
         public string multiMessage = "<ArrayOfMessage><Message><Recepients><string>5153138947</string></Recepients><Body>Whitey's Ice Cream 😊 </Body><IsIncoming>false</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131348466967150215</LocalTimestamp><Address/></Message><Message><Recepients/><Body>Ooh good to know!! Thanks</Body><IsIncoming>true</IsIncoming><IsRead>true</IsRead><Attachments/><LocalTimestamp>131348483095578379</LocalTimestamp><Address>5153138947</Address></Message></ArrayOfMessage>";
         public ExtractWindowsPhone ExtractWindows;
 

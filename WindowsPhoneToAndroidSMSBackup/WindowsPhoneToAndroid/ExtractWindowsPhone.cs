@@ -1,22 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
-using NUnit.Framework.Constraints;
 
 namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 {
     public class ExtractWindowsPhone
     {
         private const string BodyXpath = "//Body";
-        private const string SendXpath = "//Sender";
         private const string RecipientXpath = "//Recepients/string";
         private const string AddressXpath = "//Address";
         private const string TimestampXpath = "//LocalTimestamp";
         private const string IsReadXpath = "//IsRead";
         private const string IsIncomingXpath = "//IsRead";
-        private readonly string MessageTag = "//Message";
+        private const string MessageTag = "//Message";
 
         public List<Message> Extract(string xmlString)
         {
@@ -31,7 +29,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             return messages;
         }
 
-        private static void ExtractMessages(XmlNodeList nodes, List<Message> messages)
+        private static void ExtractMessages(IEnumerable nodes, ICollection<Message> messages)
         {
             foreach (XmlNode node in nodes)
             {
