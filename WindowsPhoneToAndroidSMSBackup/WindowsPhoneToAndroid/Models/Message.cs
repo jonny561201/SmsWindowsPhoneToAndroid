@@ -8,13 +8,9 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models
         {
             this.Body = Body;
             this.Address = Address;
-            this.TimeStamp = Timestamp;
+            TimeStamp = Timestamp;
             this.IsRead = IsRead;
             this.IsIncoming = IsIncoming;
-        }
-
-        public Message()
-        {
         }
 
         public string Body { get; set; }
@@ -22,5 +18,20 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models
         public DateTime TimeStamp { get; set; }
         public bool IsRead { get; set; }
         public bool IsIncoming { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var message = obj as Message;
+            return (message.Body == Body &&
+                    message.Address == Address &&
+                    message.TimeStamp == TimeStamp &&
+                    message.IsIncoming == IsIncoming &&
+                    message.IsRead == IsRead);
+        }
+
+        public override int GetHashCode()
+        {
+            return Body.Length + int.Parse(Address);
+        }
     }
 }

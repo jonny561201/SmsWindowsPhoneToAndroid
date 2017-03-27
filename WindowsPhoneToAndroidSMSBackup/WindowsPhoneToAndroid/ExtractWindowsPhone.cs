@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
@@ -8,12 +7,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 {
     public class ExtractWindowsPhone
     {
-        private const string BodyXpath = "//Body";
-        private const string RecipientXpath = "//Recepients/string";
-        private const string AddressXpath = "//Address";
-        private const string TimestampXpath = "//LocalTimestamp";
-        private const string IsReadXpath = "//IsRead";
-        private const string IsIncomingXpath = "//IsRead";
+        private const string BodyXpath = "./Body";
+        private const string RecipientXpath = "./Recepients/string";
+        private const string AddressXpath = "./Address";
+        private const string TimestampXpath = "./LocalTimestamp";
+        private const string IsReadXpath = "./IsRead";
+        private const string IsIncomingXpath = "./IsRead";
         private const string MessageTag = "//Message";
 
         public List<Message> Extract(string xmlString)
@@ -24,27 +23,24 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var nodes = xdoc.SelectNodes(MessageTag);
             var messages = new List<Message>();
 
-            ExtractMessages(nodes, messages);
+            foreach (XmlNode node in nodes)
+                ExtractMessage(node, messages);
 
             return messages;
         }
 
-        private static void ExtractMessages(IEnumerable nodes, ICollection<Message> messages)
+        private static void ExtractMessage(XmlNode node, ICollection<Message> messages)
         {
-            foreach (XmlNode node in nodes)
-            {
-                var message = new Message();
-                var timeStamp = long.Parse(node.SelectSingleNode(TimestampXpath).InnerText);
-                message.Body = node.SelectSingleNode(BodyXpath).InnerText;
-                var selectSingleNode = node.SelectSingleNode(AddressXpath);
-                message.Address = selectSingleNode.InnerText == ""
+            var timeStamp = DateTime.FromFileTime(long.Parse(node.SelectSingleNode(TimestampXpath).InnerText));
+            var body = node.SelectSingleNode(BodyXpath).InnerText;
+            var addressNode = node.SelectSingleNode(AddressXpath).InnerText;
+            var address = addressNode == ""
                     ? node.SelectSingleNode(RecipientXpath).InnerText
-                    : selectSingleNode.InnerText;
-                message.IsRead = bool.Parse(node.SelectSingleNode(IsReadXpath).InnerText);
-                message.IsIncoming = bool.Parse(node.SelectSingleNode(IsIncomingXpath).InnerText);
-                message.TimeStamp = DateTime.FromFileTime(timeStamp);
-                messages.Add(message);
-            }
+                    : addressNode;
+            var isRead = bool.Parse(node.SelectSingleNode(IsReadXpath).InnerText);
+            var isIncoming = bool.Parse(node.SelectSingleNode(IsIncomingXpath).InnerText);
+            var message = new Message(body, address, timeStamp, isRead, isIncoming);
+            messages.Add(message);
         }
     }
 }

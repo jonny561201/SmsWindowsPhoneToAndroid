@@ -11,7 +11,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
     public class ExtractWindowsPhoneTests
     {
         public string singleMessage = "<Message><Recepients/><Body>Ooh good to know!! Thanks</Body><IsIncoming>true</IsIncoming><IsRead>true</IsRead><Attachments/><LocalTimestamp>131348483095578379</LocalTimestamp><Address>5153138947</Address></Message>";
-        public string singleRecipientMessage = "<Message><Recepients><string> </string></Recepients><Body>Whitey's Ice Cream 😊 </Body><IsIncoming>false</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131348466967150215</LocalTimestamp><Address/></Message>";
+        public string singleRecipientMessage = "<Message><Recepients><string>5153138947</string></Recepients><Body>Whitey's Ice Cream 😊 </Body><IsIncoming>false</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131348466967150215</LocalTimestamp><Address/></Message>";
         public string multiMessage = "<ArrayOfMessage><Message><Recepients><string>5153138947</string></Recepients><Body>Whitey's Ice Cream 😊 </Body><IsIncoming>false</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131348466967150215</LocalTimestamp><Address/></Message><Message><Recepients/><Body>Ooh good to know!! Thanks</Body><IsIncoming>true</IsIncoming><IsRead>true</IsRead><Attachments/><LocalTimestamp>131348483095578379</LocalTimestamp><Address>5153138947</Address></Message></ArrayOfMessage>";
         public ExtractWindowsPhone ExtractWindows;
 
@@ -75,18 +75,18 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             Assert.AreEqual(expected, actual.First().Address);
         }
 
-//        [Test]
-//        public void ExtractShouldParseOutMultipleMessages()
-//        {
-//            var expectedOneDate = DateTime.FromFileTime(131348483095578379);
-//            var expectedTwoDate = DateTime.FromFileTime(131348466967150215);
-//            var exectedOne = new Message("Ooh good to know!! Thanks", "5153138947", expectedOneDate, true, true);
-//            var exectedTwo = new Message("Whitey's Ice Cream 😊 ", "5153138947", expectedTwoDate, true, true);
-//            var expectedList = new List<Message> {exectedOne, exectedTwo};
-//            var actual = ExtractWindows.Extract(multiMessage);
-//
-//            Assert.AreEqual(2, actual.Count);
-//            CollectionAssert.AreEquivalent(expectedList, actual);
-//        }
+        [Test]
+        public void ExtractShouldParseOutMultipleMessages()
+        {
+            var expectedOneDate = DateTime.FromFileTime(131348483095578379);
+            var expectedTwoDate = DateTime.FromFileTime(131348466967150215);
+            var exectedOne = new Message("Ooh good to know!! Thanks", "5153138947", expectedOneDate, true, true);
+            var exectedTwo = new Message("Whitey's Ice Cream 😊 ", "5153138947", expectedTwoDate, true, true);
+            var expectedList = new List<Message> {exectedOne, exectedTwo};
+            var actual = ExtractWindows.Extract(multiMessage);
+
+            Assert.AreEqual(2, actual.Count);
+            CollectionAssert.AreEquivalent(expectedList, actual);
+        }
     }
 }
