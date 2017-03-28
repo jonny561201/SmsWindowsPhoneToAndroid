@@ -13,6 +13,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var smsNode = xmlDoc.CreateElement("sms");
             smsNode.SetAttribute("body", message.Body);
             smsNode.SetAttribute("address", message.Address);
+            smsNode.SetAttribute("type", ConvertToType(message.IsIncoming));
             smsNode.SetAttribute("read", System.Convert.ToInt32(message.IsRead).ToString());
             smsNode.SetAttribute("readable_date", message.TimeStamp.ToString("MMM dd, yyyy hh:mm:ss tt"));
             smsNode.SetAttribute("date", ConvertToUnixTimestamp(message.TimeStamp).ToString());
@@ -20,7 +21,13 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             
             return xmlDoc;
         }
-        public static double ConvertToUnixTimestamp(DateTime date)
+
+        private static string ConvertToType(bool isIncoming)
+        {
+            return isIncoming ? "1" : "2";
+        }
+
+        private static double ConvertToUnixTimestamp(DateTime date)
         {
             var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             var diff = date.ToUniversalTime() - origin;
@@ -31,17 +38,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 
 //    <sms
 //        protocol = "0"
-//        address="5153138947"
-//        date="1490545459777"
 //        type="1"
 //        subject="null"
-//        body="Facebook - we are in the running to win best breakfast!! Need people "
 //        toa="null"
 //        sc_toa="null"
 //        service_center="null"
-//        read="1"
 //        status="-1"
 //        locked="0"
 //        date_sent="1490545375000"
-//        readable_date="Mar 26, 2017 11:24:19 AM"
 //        contact_name="(Unknown)"/>
