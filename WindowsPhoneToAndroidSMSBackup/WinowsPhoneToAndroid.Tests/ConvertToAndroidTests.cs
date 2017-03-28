@@ -15,7 +15,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         public void Setup()
         {
             convertAndroid = new ConvertToAndroid();
-            message = new Message("TestBody", "5551234567", DateTime.Now, true, true);
+            message = new Message("TestBody", "5551234567", DateTime.FromFileTime(131348483095578379), true, true);
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             var result = actual.SelectSingleNode("./sms").Attributes["body"];
 
-            Assert.AreEqual(result.Value, "TestBody");
+            Assert.AreEqual("TestBody", result.Value);
         }
 
         [Test]
@@ -35,7 +35,17 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             var result = actual.SelectSingleNode("./sms").Attributes["address"];
 
-            Assert.AreEqual(result.Value, "5551234567");
+            Assert.AreEqual("5551234567", result.Value);
+        }
+
+        [Test]
+        public void ConvertShouldTransformDateToAndroidAttribute()
+        {
+            var actual = convertAndroid.Convert(message);
+
+            var result = actual.SelectSingleNode("./sms").Attributes["date"];
+
+            Assert.AreEqual("1490374709557", result.Value);
         }
     }
 }

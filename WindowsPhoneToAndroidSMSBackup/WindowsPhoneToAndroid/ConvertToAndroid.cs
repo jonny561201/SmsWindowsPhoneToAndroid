@@ -13,9 +13,17 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var smsNode = xmlDoc.CreateElement("sms");
             smsNode.SetAttribute("body", message.Body);
             smsNode.SetAttribute("address", message.Address);
+            var longDateString = ConvertToUnixTimestamp(message.TimeStamp);
+            smsNode.SetAttribute("date", longDateString.ToString());
             xmlDoc.AppendChild(smsNode);
             
             return xmlDoc;
+        }
+        public static double ConvertToUnixTimestamp(DateTime date)
+        {
+            var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            var diff = date.ToUniversalTime() - origin;
+            return Math.Floor(diff.TotalMilliseconds);
         }
     }
 }
