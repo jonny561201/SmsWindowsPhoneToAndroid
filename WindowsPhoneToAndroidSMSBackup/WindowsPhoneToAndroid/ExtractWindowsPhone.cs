@@ -24,12 +24,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var messages = new List<Message>();
 
             foreach (XmlNode node in nodes)
-                ExtractMessage(node, messages);
+                messages.Add(ExtractMessage(node, messages));
 
             return messages;
         }
 
-        private static void ExtractMessage(XmlNode node, ICollection<Message> messages)
+        private static Message ExtractMessage(XmlNode node, ICollection<Message> messages)
         {
             var timeStamp = DateTime.FromFileTime(long.Parse(node.SelectSingleNode(TimestampXpath).InnerText));
             var body = node.SelectSingleNode(BodyXpath).InnerText;
@@ -39,8 +39,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
                     : addressNode;
             var isRead = bool.Parse(node.SelectSingleNode(IsReadXpath).InnerText);
             var isIncoming = bool.Parse(node.SelectSingleNode(IsIncomingXpath).InnerText);
-            var message = new Message(body, address, timeStamp, isRead, isIncoming);
-            messages.Add(message);
+            return new Message(body, address, timeStamp, isRead, isIncoming);
         }
     }
 }
