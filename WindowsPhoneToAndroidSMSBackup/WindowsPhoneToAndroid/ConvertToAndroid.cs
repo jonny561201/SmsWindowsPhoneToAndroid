@@ -12,6 +12,10 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 
             var smsNode = xmlDoc.CreateElement("sms");
             smsNode.SetAttribute("body", message.Body);
+            smsNode.SetAttribute("protocol", "0");
+            smsNode.SetAttribute("subject", "null");
+            smsNode.SetAttribute("toa", "null");
+            smsNode.SetAttribute("sc_toa", "null");
             smsNode.SetAttribute("address", message.Address);
             smsNode.SetAttribute("type", ConvertToType(message.IsIncoming));
             smsNode.SetAttribute("read", System.Convert.ToInt32(message.IsRead).ToString());
@@ -37,9 +41,6 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 }
 
 //    <sms
-//        protocol = "0"
-//        type="1"
-//        subject="null"
 //        toa="null"
 //        sc_toa="null"
 //        service_center="null"
