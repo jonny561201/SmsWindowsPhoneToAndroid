@@ -13,6 +13,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var smsNode = xmlDoc.CreateElement("sms");
             smsNode.SetAttribute("body", message.Body);
             smsNode.SetAttribute("address", message.Address);
+            smsNode.SetAttribute("read", System.Convert.ToInt32(message.IsRead).ToString());
             smsNode.SetAttribute("readable_date", message.TimeStamp.ToString("MMM dd, yyyy hh:mm:ss tt"));
             smsNode.SetAttribute("date", ConvertToUnixTimestamp(message.TimeStamp).ToString());
             xmlDoc.AppendChild(smsNode);

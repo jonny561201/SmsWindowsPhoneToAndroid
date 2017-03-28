@@ -57,5 +57,15 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             Assert.AreEqual("Mar 24, 2017 11:58:29 AM", result.Value);
         }
+
+        [Test]
+        public void ConvertShouldTransformReadStatusToAndroidAttribute()
+        {
+            var actual = convertAndroid.Convert(message);
+
+            var result = actual.SelectSingleNode("./sms").Attributes["read"];
+
+            Assert.AreEqual("1", result.Value);
+        }
     }
 }
