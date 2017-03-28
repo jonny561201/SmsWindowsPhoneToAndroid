@@ -12,6 +12,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 
             var smsNode = xmlDoc.CreateElement("sms");
             smsNode.SetAttribute("body", message.Body);
+            smsNode.SetAttribute("address", message.Address);
             xmlDoc.AppendChild(smsNode);
             
             return xmlDoc;

@@ -23,9 +23,9 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("//sms[@body]").Attributes;
+            var result = actual.SelectSingleNode("./sms").Attributes["body"];
 
-            Assert.AreEqual(result[0].Value, "TestBody");
+            Assert.AreEqual(result.Value, "TestBody");
         }
 
         [Test]
@@ -33,9 +33,9 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("//sms[@address]").Attributes;
+            var result = actual.SelectSingleNode("./sms").Attributes["address"];
 
-            Assert.AreEqual(result[0].Value, "5551234567");
+            Assert.AreEqual(result.Value, "5551234567");
         }
     }
 }
