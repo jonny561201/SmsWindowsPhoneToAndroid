@@ -117,5 +117,35 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             Assert.AreEqual("null", result.Value);
         }
+
+        [Test]
+        public void ConvertShouldTransformServiceCenterDefaultedToAndroidAttribute()
+        {
+            var actual = convertAndroid.Convert(message);
+
+            var result = actual.SelectSingleNode("./sms").Attributes["service_center"];
+
+            Assert.AreEqual("null", result.Value);
+        }
+
+        [Test]
+        public void ConvertShouldTransformStatusDefaultedToAndroidAttribute()
+        {
+            var actual = convertAndroid.Convert(message);
+
+            var result = actual.SelectSingleNode("./sms").Attributes["status"];
+
+            Assert.AreEqual("-1", result.Value);
+        }
+
+        [Test]
+        public void ConvertShouldTransformLockedDefaultedToAndroidAttribute()
+        {
+            var actual = convertAndroid.Convert(message);
+
+            var result = actual.SelectSingleNode("./sms").Attributes["locked"];
+
+            Assert.AreEqual("0", result.Value);
+        }
     }
 }

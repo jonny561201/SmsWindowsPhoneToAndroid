@@ -16,6 +16,9 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             smsNode.SetAttribute("subject", "null");
             smsNode.SetAttribute("toa", "null");
             smsNode.SetAttribute("sc_toa", "null");
+            smsNode.SetAttribute("status", "-1");
+            smsNode.SetAttribute("locked", "0");
+            smsNode.SetAttribute("service_center", "null");
             smsNode.SetAttribute("address", message.Address);
             smsNode.SetAttribute("type", ConvertToType(message.IsIncoming));
             smsNode.SetAttribute("read", System.Convert.ToInt32(message.IsRead).ToString());
@@ -41,10 +44,6 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 }
 
 //    <sms
-//        toa="null"
-//        sc_toa="null"
-//        service_center="null"
-//        status="-1"
 //        locked="0"
 //        date_sent="1490545375000"
 //        contact_name="(Unknown)"/>
