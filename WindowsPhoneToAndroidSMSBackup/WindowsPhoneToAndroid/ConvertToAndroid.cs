@@ -19,11 +19,13 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             smsNode.SetAttribute("status", "-1");
             smsNode.SetAttribute("locked", "0");
             smsNode.SetAttribute("service_center", "null");
+            smsNode.SetAttribute("contact_name", "(Unknown)");
             smsNode.SetAttribute("address", message.Address);
             smsNode.SetAttribute("type", ConvertToType(message.IsIncoming));
             smsNode.SetAttribute("read", System.Convert.ToInt32(message.IsRead).ToString());
             smsNode.SetAttribute("readable_date", message.TimeStamp.ToString("MMM dd, yyyy hh:mm:ss tt"));
             smsNode.SetAttribute("date", ConvertToUnixTimestamp(message.TimeStamp).ToString());
+            smsNode.SetAttribute("date_sent", ConvertToUnixTimestamp(message.TimeStamp.AddMinutes(-2)).ToString());
             xmlDoc.AppendChild(smsNode);
             
             return xmlDoc;
@@ -42,8 +44,3 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
         }
     }
 }
-
-//    <sms
-//        locked="0"
-//        date_sent="1490545375000"
-//        contact_name="(Unknown)"/>
