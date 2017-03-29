@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 {
@@ -20,7 +16,10 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
         public void Transform()
         {
             var messages = _extractor.Extract("<body>fake</body>");
-            _convertToAndroid.Convert(messages.First());
+            foreach (var message in messages)
+            {
+                _convertToAndroid.Convert(message);
+            }
         }
     }
 }

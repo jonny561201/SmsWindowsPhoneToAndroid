@@ -27,6 +27,10 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         [Test]
         public void TransformShouldCallExtract()
         {
+            var message = new Message("FakeBody", "5551234567", DateTime.Now, true, true);
+            var expectedMessages = new List<Message> { message };
+            _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+
             _controller.Transform();
 
             _extractor.Verify(x => x.Extract(FakeXml));
@@ -41,6 +45,19 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             _controller.Transform();
 
             _converter.Verify(x => x.Convert(expectedMessages.First()));
+        }
+
+        [Test]
+        public void TransformShouldIterateOverMessagesFromExtractToConverter()
+        {
+            var message1 = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
+            var message2 = new Message("FakeBody2", "5551234568", DateTime.Now, false, false);
+            var expectedMessages = new List<Message> {message1, message2};
+            _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+            _controller.Transform();
+
+            _converter.Verify(x => x.Convert(message1));
+            _converter.Verify(x => x.Convert(message2));
         }
     }
 }
