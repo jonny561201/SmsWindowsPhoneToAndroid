@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 
@@ -21,15 +22,11 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             xdoc.LoadXml(xmlString);
 
             var nodes = xdoc.SelectNodes(MessageTag);
-            var messages = new List<Message>();
 
-            foreach (XmlNode node in nodes)
-                messages.Add(ExtractMessage(node, messages));
-
-            return messages;
+            return (from XmlNode node in nodes select ExtractMessage(node)).ToList();
         }
 
-        private static Message ExtractMessage(XmlNode node, ICollection<Message> messages)
+        private static Message ExtractMessage(XmlNode node)
         {
             var timeStamp = DateTime.FromFileTime(long.Parse(node.SelectSingleNode(TimestampXpath).InnerText));
             var body = node.SelectSingleNode(BodyXpath).InnerText;
