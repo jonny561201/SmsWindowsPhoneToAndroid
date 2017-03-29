@@ -102,5 +102,21 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             Assert.AreEqual("sms", actual.FirstChild.FirstChild.Name);
         }
+
+        [Test]
+        public void TransformShouldReturnXmlDocumentWithMultipleSmsElement()
+        {
+            var message1 = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
+            var message2 = new Message("FakeBody2", "5551234567", DateTime.Now, true, true);
+            var expectedMessages = new List<Message> { message1, message2 };
+            _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+            var converter = new ConvertToAndroid();
+            var controller = new TransformController(_extractor.Object, converter);
+
+            var actual = controller.Transform();
+
+            Assert.AreEqual(2, actual.FirstChild.ChildNodes.Count);
+            Assert.AreEqual("sms", actual.FirstChild.FirstChild.Name);
+        }
     }
 }
