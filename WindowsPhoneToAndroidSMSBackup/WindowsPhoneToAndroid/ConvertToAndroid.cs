@@ -4,7 +4,12 @@ using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 
 namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 {
-    public class ConvertToAndroid
+    public interface IConvertToAndroid
+    {
+        XmlNode Convert(Message message);
+    }
+
+    public class ConvertToAndroid : IConvertToAndroid
     {
         //now need to iterate over list of Messages in controller class that will read file 
         //parse objects and build smses xmlNode containing messages
