@@ -59,5 +59,33 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             _converter.Verify(x => x.Convert(message1));
             _converter.Verify(x => x.Convert(message2));
         }
+
+        [Test]
+        public void TransformShouldReturnXmlDocumentWithSmsesTag()
+        {
+            var message = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
+            var expectedMessages = new List<Message> { message };
+            _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+            var converter = new ConvertToAndroid();
+            var controller = new TransformController(_extractor.Object, converter);
+
+            var actual = controller.Transform();
+
+            Assert.AreEqual("smses", actual.FirstChild.Name);
+        }
+
+        [Test]
+        public void TransformShouldReturnXmlDocumentWithCountAttribute()
+        {
+            var message = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
+            var expectedMessages = new List<Message> { message };
+            _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+            var converter = new ConvertToAndroid();
+            var controller = new TransformController(_extractor.Object, converter);
+
+            var actual = controller.Transform();
+
+            Assert.AreEqual("1", actual.FirstChild.Attributes["count"].Value);
+        }
     }
 }

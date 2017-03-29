@@ -11,8 +11,6 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 
     public class ConvertToAndroid : IConvertToAndroid
     {
-        //now need to iterate over list of Messages in controller class that will read file 
-        //parse objects and build smses xmlNode containing messages
         public XmlNode Convert(Message message)
         {
             var xmlDoc = new XmlDocument();
