@@ -23,7 +23,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["body"];
+            var result = actual.Attributes["body"];
 
             Assert.AreEqual("TestBody", result.Value);
         }
@@ -33,7 +33,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["address"];
+            var result = actual.Attributes["address"];
 
             Assert.AreEqual("5551234567", result.Value);
         }
@@ -43,7 +43,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["date"];
+            var result = actual.Attributes["date"];
 
             Assert.AreEqual("1490374709557", result.Value);
         }
@@ -53,7 +53,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["readable_date"];
+            var result = actual.Attributes["readable_date"];
 
             Assert.AreEqual("Mar 24, 2017 11:58:29 AM", result.Value);
         }
@@ -63,7 +63,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["read"];
+            var result = actual.Attributes["read"];
 
             Assert.AreEqual("1", result.Value);
         }
@@ -73,7 +73,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["type"];
+            var result = actual.Attributes["type"];
 
             Assert.AreEqual("1", result.Value);
         }
@@ -83,7 +83,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["protocol"];
+            var result = actual.Attributes["protocol"];
 
             Assert.AreEqual("0", result.Value);
         }
@@ -93,7 +93,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["subject"];
+            var result = actual.Attributes["subject"];
 
             Assert.AreEqual("null", result.Value);
         }
@@ -103,7 +103,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["toa"];
+            var result = actual.Attributes["toa"];
 
             Assert.AreEqual("null", result.Value);
         }
@@ -113,7 +113,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["sc_toa"];
+            var result = actual.Attributes["sc_toa"];
 
             Assert.AreEqual("null", result.Value);
         }
@@ -123,7 +123,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["service_center"];
+            var result = actual.Attributes["service_center"];
 
             Assert.AreEqual("null", result.Value);
         }
@@ -133,7 +133,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["status"];
+            var result = actual.Attributes["status"];
 
             Assert.AreEqual("-1", result.Value);
         }
@@ -143,7 +143,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["locked"];
+            var result = actual.Attributes["locked"];
 
             Assert.AreEqual("0", result.Value);
         }
@@ -153,7 +153,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["date_sent"];
+            var result = actual.Attributes["date_sent"];
 
             Assert.AreEqual("1490374589557", result.Value);
         }
@@ -163,7 +163,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         {
             var actual = convertAndroid.Convert(message);
 
-            var result = actual.SelectSingleNode("./sms").Attributes["contact_name"];
+            var result = actual.Attributes["contact_name"];
 
             Assert.AreEqual("(Unknown)", result.Value);
         }

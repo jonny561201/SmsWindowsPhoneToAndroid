@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 
@@ -20,11 +21,17 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             var messages = _extractor.Extract("<body>fake</body>");
             var xmlDoc = new XmlDocument();
             var smsNode = xmlDoc.CreateElement("smses");
-            var smsNodeList = new List<XmlNode>();
+            var smsNodeList = new List<XmlElement>();
 
-            messages.Select(x => _convertToAndroid.Convert(x)).ToList();
+            smsNodeList = messages.Select(x => _convertToAndroid.Convert(x)).ToList();
+            foreach (var xmlNode in smsNodeList)
+            {
+                var importedNode = smsNode.OwnerDocument.ImportNode(xmlNode, true);
+                smsNode.AppendChild(importedNode);
+            }
 
             smsNode.SetAttribute("count", messages.Count.ToString());
+            smsNode.SetAttribute("backup_date", Helpers.ConvertToUnixTimestamp(DateTime.Now).ToString());
 
             xmlDoc.AppendChild(smsNode);
             return xmlDoc;

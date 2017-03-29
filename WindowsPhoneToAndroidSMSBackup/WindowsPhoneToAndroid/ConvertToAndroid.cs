@@ -6,12 +6,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 {
     public interface IConvertToAndroid
     {
-        XmlNode Convert(Message message);
+        XmlElement Convert(Message message);
     }
 
     public class ConvertToAndroid : IConvertToAndroid
     {
-        public XmlNode Convert(Message message)
+        public XmlElement Convert(Message message)
         {
             var xmlDoc = new XmlDocument();
 
@@ -29,23 +29,16 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             smsNode.SetAttribute("type", ConvertToType(message.IsIncoming));
             smsNode.SetAttribute("read", System.Convert.ToInt32(message.IsRead).ToString());
             smsNode.SetAttribute("readable_date", message.TimeStamp.ToString("MMM dd, yyyy hh:mm:ss tt"));
-            smsNode.SetAttribute("date", ConvertToUnixTimestamp(message.TimeStamp).ToString());
-            smsNode.SetAttribute("date_sent", ConvertToUnixTimestamp(message.TimeStamp.AddMinutes(-2)).ToString());
+            smsNode.SetAttribute("date", Helpers.ConvertToUnixTimestamp(message.TimeStamp).ToString());
+            smsNode.SetAttribute("date_sent", Helpers.ConvertToUnixTimestamp(message.TimeStamp.AddMinutes(-2)).ToString());
             xmlDoc.AppendChild(smsNode);
             
-            return xmlDoc;
+            return smsNode;
         }
 
         private static string ConvertToType(bool isIncoming)
         {
             return isIncoming ? "1" : "2";
-        }
-
-        private static double ConvertToUnixTimestamp(DateTime date)
-        {
-            var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            var diff = date.ToUniversalTime() - origin;
-            return Math.Floor(diff.TotalMilliseconds);
         }
     }
 }

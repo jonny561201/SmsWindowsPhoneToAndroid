@@ -55,6 +55,7 @@
     <Compile Include="WindowsPhoneToAndroid\ConvertToAndroid.cs" />
     <Compile Include="WindowsPhoneToAndroid\ExtractWindowsPhone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsPhoneToAndroid\Helpers.cs" />
     <Compile Include="WindowsPhoneToAndroid\Models\Message.cs" />
     <Compile Include="WindowsPhoneToAndroid\TransformController.cs" />
     <Compile Include="WinowsPhoneToAndroid.Tests\ConvertToAndroidTests.cs" />

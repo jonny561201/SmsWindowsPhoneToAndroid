@@ -75,7 +75,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         }
 
         [Test]
-        public void TransformShouldReturnXmlDocumentWithCountAttribute()
+        public void TransformShouldReturnXmlDocumentWithAttributes()
         {
             var message = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
             var expectedMessages = new List<Message> { message };
@@ -86,6 +86,21 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             var actual = controller.Transform();
 
             Assert.AreEqual("1", actual.FirstChild.Attributes["count"].Value);
+            Assert.AreEqual("backup_date", actual.FirstChild.Attributes["backup_date"].Name);
+        }
+
+        [Test]
+        public void TransformShouldReturnXmlDocumentWithSmsElement()
+        {
+            var message = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
+            var expectedMessages = new List<Message> { message };
+            _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+            var converter = new ConvertToAndroid();
+            var controller = new TransformController(_extractor.Object, converter);
+
+            var actual = controller.Transform();
+
+            Assert.AreEqual("sms", actual.FirstChild.FirstChild.Name);
         }
     }
 }
