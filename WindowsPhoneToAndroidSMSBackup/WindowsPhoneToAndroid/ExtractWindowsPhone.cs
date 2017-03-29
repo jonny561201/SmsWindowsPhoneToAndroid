@@ -6,7 +6,12 @@ using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 
 namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
 {
-    public class ExtractWindowsPhone
+    public interface IExtractWindowsPhone
+    {
+        List<Message> Extract(string xmlString);
+    }
+
+    public class ExtractWindowsPhone : IExtractWindowsPhone
     {
         private const string BodyXpath = "./Body";
         private const string RecipientXpath = "./Recepients/string";
