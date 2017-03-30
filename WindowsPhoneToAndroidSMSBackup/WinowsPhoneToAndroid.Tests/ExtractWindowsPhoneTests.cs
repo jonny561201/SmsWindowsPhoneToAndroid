@@ -67,6 +67,15 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         }
 
         [Test]
+        public void ExtractShouldParseOutIncomingAsFalse()
+        {
+            var expected = false;
+            var actual = ExtractWindows.Extract(singleRecipientMessage);
+
+            Assert.AreEqual(expected, actual.First().IsIncoming);
+        }
+
+        [Test]
         public void ExtractShouldParseOutRecipientMessage()
         {
             var expected = "5551234567";

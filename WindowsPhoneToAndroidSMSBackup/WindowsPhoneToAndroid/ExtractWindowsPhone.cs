@@ -18,7 +18,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
         private const string AddressXpath = "./Sender";
         private const string TimestampXpath = "./LocalTimestamp";
         private const string IsReadXpath = "./IsRead";
-        private const string IsIncomingXpath = "./IsRead";
+        private const string IsIncomingXpath = "./IsIncoming";
         private const string MessageTag = "//Message";
 
         public List<Message> Extract(string xmlString)
