@@ -107,6 +107,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             Assert.AreEqual("1", actual.LastChild.Attributes["count"].Value);
             Assert.AreEqual("backup_date", actual.LastChild.Attributes["backup_date"].Name);
+            Assert.AreEqual("backup_set", actual.LastChild.Attributes["backup_set"].Name);
         }
 
         [Test]

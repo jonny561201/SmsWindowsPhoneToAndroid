@@ -32,6 +32,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             }
 
             smsNode.SetAttribute("count", messages.Count.ToString());
+            smsNode.SetAttribute("backup_set", Guid.NewGuid().ToString());
             smsNode.SetAttribute("backup_date", Helpers.ConvertToUnixTimestamp(DateTime.Now).ToString());
 
             xmlDoc.AppendChild(smsNode);
