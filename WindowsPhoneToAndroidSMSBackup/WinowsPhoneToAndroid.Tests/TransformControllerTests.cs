@@ -91,7 +91,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             var actual = controller.Transform(FakeXml);
 
-            Assert.AreEqual("smses", actual.FirstChild.Name);
+            Assert.AreEqual("smses", actual.LastChild.Name);
         }
 
         [Test]
@@ -105,8 +105,8 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             var actual = controller.Transform(FakeXml);
 
-            Assert.AreEqual("1", actual.FirstChild.Attributes["count"].Value);
-            Assert.AreEqual("backup_date", actual.FirstChild.Attributes["backup_date"].Name);
+            Assert.AreEqual("1", actual.LastChild.Attributes["count"].Value);
+            Assert.AreEqual("backup_date", actual.LastChild.Attributes["backup_date"].Name);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             var actual = controller.Transform(FakeXml);
 
-            Assert.AreEqual("sms", actual.FirstChild.FirstChild.Name);
+            Assert.AreEqual("sms", actual.LastChild.FirstChild.Name);
         }
 
         [Test]
@@ -135,8 +135,23 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
 
             var actual = controller.Transform(FakeXml);
 
-            Assert.AreEqual(2, actual.FirstChild.ChildNodes.Count);
-            Assert.AreEqual("sms", actual.FirstChild.FirstChild.Name);
+            Assert.AreEqual(2, actual.LastChild.ChildNodes.Count);
+            Assert.AreEqual("sms", actual.LastChild.FirstChild.Name);
+            Assert.AreEqual("sms", actual.LastChild.LastChild.Name);
+        }
+
+        [Test]
+        public void TransformShouldReturnXmlDocumentWithDeclarationTag()
+        {
+            var message = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
+            var expectedMessages = new List<Message> { message };
+            _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+            var converter = new ConvertToAndroid();
+            var controller = new TransformController(_extractor.Object, converter);
+
+            var actual = controller.Transform(FakeXml);
+
+            Assert.AreEqual("xml", actual.ChildNodes[0].Name);
         }
     }
 }

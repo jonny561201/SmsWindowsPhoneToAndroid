@@ -20,6 +20,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
         {
             var messages = _extractor.Extract(xmlString);
             var xmlDoc = new XmlDocument();
+            var xmlDec = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
             var smsNode = xmlDoc.CreateElement("smses");
             var smsNodeList = new List<XmlElement>();
 
@@ -34,6 +35,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             smsNode.SetAttribute("backup_date", Helpers.ConvertToUnixTimestamp(DateTime.Now).ToString());
 
             xmlDoc.AppendChild(smsNode);
+            xmlDoc.InsertBefore(xmlDec, smsNode);
             return xmlDoc;
         }
     }
