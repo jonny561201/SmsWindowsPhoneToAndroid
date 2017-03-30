@@ -56,10 +56,12 @@
     <Compile Include="WindowsPhoneToAndroid\ExtractWindowsPhone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsPhoneToAndroid\Helpers.cs" />
+    <Compile Include="WindowsPhoneToAndroid\Main.cs" />
     <Compile Include="WindowsPhoneToAndroid\Models\Message.cs" />
     <Compile Include="WindowsPhoneToAndroid\TransformController.cs" />
     <Compile Include="WinowsPhoneToAndroid.Tests\ConvertToAndroidTests.cs" />
     <Compile Include="WinowsPhoneToAndroid.Tests\ExtractWindowsPhoneTests.cs" />
+    <Compile Include="WinowsPhoneToAndroid.Tests\MainTest.cs" />
     <Compile Include="WinowsPhoneToAndroid.Tests\TransformControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
