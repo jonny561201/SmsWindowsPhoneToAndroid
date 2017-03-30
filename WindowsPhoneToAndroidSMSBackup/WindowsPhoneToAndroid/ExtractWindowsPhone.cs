@@ -15,7 +15,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
     {
         private const string BodyXpath = "./Body";
         private const string RecipientXpath = "./Recepients/string";
-        private const string AddressXpath = "./Address";
+        private const string AddressXpath = "./Sender";
         private const string TimestampXpath = "./LocalTimestamp";
         private const string IsReadXpath = "./IsRead";
         private const string IsIncomingXpath = "./IsRead";
