@@ -16,9 +16,9 @@ namespace WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid
             _convertToAndroid = convertToAndroid;
         }
 
-        public XmlDocument Transform(string bodyFakeBody)
+        public XmlDocument Transform(string xmlString)
         {
-            var messages = _extractor.Extract("<body>fake</body>");
+            var messages = _extractor.Extract(xmlString);
             var xmlDoc = new XmlDocument();
             var smsNode = xmlDoc.CreateElement("smses");
             var smsNodeList = new List<XmlElement>();

@@ -41,6 +41,20 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         }
 
         [Test]
+        public void TransformShouldCallExtractWithSuppliedString()
+        {
+            var altXmlString = "<fakeElement/>";
+            var message = new Message("FakeBody", "555123456", DateTime.Now, true, true);
+            var expectedMessages = new List<Message> { message };
+            _extractor.Setup(x => x.Extract(altXmlString)).Returns(expectedMessages);
+            _converter.Setup(x => x.Convert(message)).Returns(_element);
+
+            _controller.Transform(altXmlString);
+
+            _extractor.Verify(x => x.Extract(altXmlString));
+        }
+
+        [Test]
         public void TransformShouldPassResultFromExtractToConverter()
         {
             var message = new Message("FakeBody", "555123456", DateTime.Now, true, true);
