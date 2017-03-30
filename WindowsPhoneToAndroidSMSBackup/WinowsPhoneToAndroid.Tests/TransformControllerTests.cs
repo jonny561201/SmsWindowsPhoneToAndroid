@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid;
 using WindowsPhoneToAndroidSMSBackup.WindowsPhoneToAndroid.Models;
 using Moq;
@@ -15,10 +16,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         private Mock<IExtractWindowsPhone> _extractor;
         private Mock<IConvertToAndroid> _converter;
         private const string FakeXml = "<body>fake</body>";
+        private XmlElement _element;
 
         [SetUp]
         public void Setup()
         {
+            _element = new XmlDocument().CreateElement("sms");
             _converter = new Mock<IConvertToAndroid>();
             _extractor = new Mock<IExtractWindowsPhone>();
             _controller = new TransformController(_extractor.Object, _converter.Object);
@@ -27,11 +30,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         [Test]
         public void TransformShouldCallExtract()
         {
-            var message = new Message("FakeBody", "5551234567", DateTime.Now, true, true);
+            var message = new Message("FakeBody", "555123456", DateTime.Now, true, true);
             var expectedMessages = new List<Message> { message };
             _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
+            _converter.Setup(x => x.Convert(message)).Returns(_element);
 
-            _controller.Transform();
+            _controller.Transform(FakeXml);
 
             _extractor.Verify(x => x.Extract(FakeXml));
         }
@@ -39,10 +43,11 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         [Test]
         public void TransformShouldPassResultFromExtractToConverter()
         {
-            var message = new Message("FakeBody", "5551234567", DateTime.Now, true, true);
+            var message = new Message("FakeBody", "555123456", DateTime.Now, true, true);
             var expectedMessages = new List<Message> {message};
             _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
-            _controller.Transform();
+            _converter.Setup(x => x.Convert(message)).Returns(_element);
+            _controller.Transform(FakeXml);
 
             _converter.Verify(x => x.Convert(expectedMessages.First()));
         }
@@ -50,11 +55,12 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
         [Test]
         public void TransformShouldIterateOverMessagesFromExtractToConverter()
         {
-            var message1 = new Message("FakeBody1", "5551234567", DateTime.Now, true, true);
-            var message2 = new Message("FakeBody2", "5551234568", DateTime.Now, false, false);
+            var message1 = new Message("FakeBody1", "555123456", DateTime.Now, true, true);
+            var message2 = new Message("FakeBody2", "555123456", DateTime.Now, false, false);
             var expectedMessages = new List<Message> {message1, message2};
             _extractor.Setup(x => x.Extract(FakeXml)).Returns(expectedMessages);
-            _controller.Transform();
+            _converter.Setup(x => x.Convert(It.IsAny<Message>())).Returns(_element);
+            _controller.Transform(FakeXml);
 
             _converter.Verify(x => x.Convert(message1));
             _converter.Verify(x => x.Convert(message2));
@@ -69,7 +75,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             var converter = new ConvertToAndroid();
             var controller = new TransformController(_extractor.Object, converter);
 
-            var actual = controller.Transform();
+            var actual = controller.Transform(FakeXml);
 
             Assert.AreEqual("smses", actual.FirstChild.Name);
         }
@@ -83,7 +89,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             var converter = new ConvertToAndroid();
             var controller = new TransformController(_extractor.Object, converter);
 
-            var actual = controller.Transform();
+            var actual = controller.Transform(FakeXml);
 
             Assert.AreEqual("1", actual.FirstChild.Attributes["count"].Value);
             Assert.AreEqual("backup_date", actual.FirstChild.Attributes["backup_date"].Name);
@@ -98,7 +104,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             var converter = new ConvertToAndroid();
             var controller = new TransformController(_extractor.Object, converter);
 
-            var actual = controller.Transform();
+            var actual = controller.Transform(FakeXml);
 
             Assert.AreEqual("sms", actual.FirstChild.FirstChild.Name);
         }
@@ -113,7 +119,7 @@ namespace WindowsPhoneToAndroidSMSBackup.WinowsPhoneToAndroid.Tests
             var converter = new ConvertToAndroid();
             var controller = new TransformController(_extractor.Object, converter);
 
-            var actual = controller.Transform();
+            var actual = controller.Transform(FakeXml);
 
             Assert.AreEqual(2, actual.FirstChild.ChildNodes.Count);
             Assert.AreEqual("sms", actual.FirstChild.FirstChild.Name);
